@@ -24,6 +24,13 @@ jobs:
         with:
           python-version: '3.10'
           retention-days: 1
+      - name: "Upload artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-artifact
+          path: .coverage
+          retention-days: 1
+          include-hidden-files: true # Necessary if upload contains hidden file.
       - name: "Install pytest and coverage"
         run: pip install pytest matplotlib numpy coverage
       - name: "Run pytest"
@@ -39,7 +46,19 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.10'
+      - name: "Download a single artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-artifact
+      - name: "Upload artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-artifact
+          path: coverage.xml
           retention-days: 14
+          include-hidden-files: true # Necessary if upload contains hidden file.
+      - name: "Install coverage"
+        run: pip install coverage
       - name: "Convert coverage to report"
         run: python -m coverage report
       - name: "Convert coverage to xml"
