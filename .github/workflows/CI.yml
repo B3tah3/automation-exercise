@@ -28,7 +28,7 @@ jobs:
       - name: "Run pytest"
         run: python -m pytest
       - name: "Run coverage"
-        run: python -m coverage
+        run: python -m coverage report
       - name: "Upload artifact"
         uses: actions/upload-artifact@v4
         with:
@@ -51,8 +51,6 @@ jobs:
           name: coverage-artifact
       - name: "Install coverage"
         run: pip install coverage
-      - name: "Convert coverage to report"
-        run: python -m coverage report
       - name: "Convert coverage to xml"
         run: python -m coverage xml
       - name: "Upload artifact"
